@@ -1,0 +1,147 @@
+$background_color: #000;
+$secondary_color: #fff;
+$item_count: 15;
+$border_radius: 45%;
+$multiplier: 0.75;
+$time: 2.5s;
+$delta: 0.045;
+
+.plane {
+    display: block;
+    height: 0;
+    width: 0;
+    overflow: visible;
+    transform-origin: 50% 50%;
+    transform: rotateZ(0deg) translate(-50px, 0);
+    -webkit-animation: spin $time ease-in-out alternate infinite;
+    -moz-animation: spin $time ease-in-out alternate infinite;
+    -o-animation: spin $time ease-in-out alternate infinite;
+    animation: spin $time ease-in-out alternate infinite;
+
+    &:nth-of-type(odd) .triangle {
+        background-color: $secondary_color;
+    }
+
+    &:nth-of-type(even) .triangle {
+        background-color: $background_color;
+    }
+}
+
+.triangle {
+    position: absolute;
+    border-top-right-radius: $border_radius;
+    transform-origin: -50% 50%;
+    transform: rotateZ(-60deg) skewX(-30deg) scale(1, 0.866);
+
+    &:before,
+    &:after {
+        content: "";
+        position: absolute;
+        background-color: inherit;
+        border-top-right-radius: $border_radius;
+    }
+
+    &:before {
+        box-shadow: -6px -5px 10px 3px rgba($background_color, 0.075);
+        -webkit-transform: rotate(-135deg) skewX(-45deg) scale(1.414, 0.707) translate(0, -50%);
+        -moz-transform: rotate(-135deg) skewX(-45deg) scale(1.414, 0.707) translate(0, -50%);
+        -ms-transform: rotate(-135deg) skewX(-45deg) scale(1.414, 0.707) translate(0, -50%);
+        -o-transform: rotate(-135deg) skewX(-45deg) scale(1.414, 0.707) translate(0, -50%);
+        transform: rotate(-135deg) skewX(-45deg) scale(1.414, 0.707) translate(0, -50%);
+    }
+
+    &:after {
+        box-shadow: 14px -1px 10px -6px rgba($background_color, 0.075);
+        -webkit-transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414) translate(50%);
+        -moz-transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414) translate(50%);
+        -ms-transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414) translate(50%);
+        -o-transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414) translate(50%);
+        transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414) translate(50%);
+    }
+}
+
+@for $i from 1 through $item_count {
+    .plane:nth-of-type(#{$i}) {
+        z-index: $item_count - $i;
+        animation-delay: ($i * $delta) + s;
+    }
+
+    .plane:nth-of-type(#{$i}) .triangle,
+    .plane:nth-of-type(#{$i}) .triangle:before,
+    .plane:nth-of-type(#{$i}) .triangle:after {
+        $size: ($i * $multiplier) + em;
+        width: $size;
+        height: $size;
+    }
+}
+
+@keyframes spin {
+    0% {
+        -webkit-transform: rotateZ(0deg) translate(-50px, 0);
+        -moz-transform: rotateZ(0deg) translate(-50px, 0);
+        -o-transform: rotateZ(0deg) translate(-50px, 0);
+        transform: rotateZ(0deg) translate(-50px, 0);
+    }
+    100% {
+        -webkit-transform: rotateZ(120deg) translate(-50px, -80px);
+        -moz-transform: rotateZ(120deg) translate(-50px, -80px);
+        -o-transform: rotateZ(120deg) translate(-50px, -80px);
+        transform: rotateZ(120deg) translate(-50px, -80px);
+    }
+}
+
+//
+// Inspiration snippet
+//
+
+.inspiration {
+    display: block;
+    position: fixed;
+    height: 30px;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+
+    &__link {
+        display: block;
+        cursor: pointer;
+        padding: 0 10px;
+        line-height: 30px;
+        background-color: #34363f;
+        color: #fff;
+        border-top-right-radius: 4px;
+        font-size: 12px;
+    }
+}
+
+//
+// Page Default Styles
+//
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    display: block;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background-color: $background_color;
+    background: linear-gradient(#1f1f21, $background_color);
+}
+
+.main {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
