@@ -1,3 +1,9 @@
+#title {
+  color: beige;
+  position: fixed;
+  top: 5%;
+  left: 40%;
+}
 .plane {
   display: block;
   height: 0;
